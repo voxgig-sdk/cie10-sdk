@@ -1,0 +1,79 @@
+# Entity: cie_10
+
+main: kit: entity: cie_10: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "codigo"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "nivel"
+      req: true
+      type: "`$INTEGER`"
+    }
+    {
+      name: "nombre"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "url"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "cie_10"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: 3
+                kind: "query"
+                name: "limit"
+                orig: "limit"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: "diabetes"
+                kind: "query"
+                name: "q"
+                orig: "q"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/buscar/cie-10"
+          parts: [
+            "buscar"
+            "cie-10"
+          ]
+          select: {
+            exist: [
+              "limit"
+              "q"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

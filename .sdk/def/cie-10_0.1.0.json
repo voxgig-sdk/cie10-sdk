@@ -1,0 +1,174 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "NotaSalud CIE-10 Search API",
+    "version": "1.0.0",
+    "description": "Public JSON endpoint for searching Spanish CIE-10/ICD-10 reference entries on NotaSalud. This API is for code/reference lookup and does not provide diagnosis, treatment advice, or clinical decision support.",
+    "contact": {
+      "name": "NotaSalud",
+      "url": "https://notasalud.com/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://notasalud.com",
+      "description": "NotaSalud production site"
+    }
+  ],
+  "externalDocs": {
+    "description": "NotaSalud CIE-10 API documentation",
+    "url": "https://notasalud.com/api-cie-10"
+  },
+  "tags": [
+    {
+      "name": "CIE-10",
+      "description": "Spanish ICD/CIE-10 reference search"
+    }
+  ],
+  "paths": {
+    "/buscar/cie-10": {
+      "get": {
+        "tags": [
+          "CIE-10"
+        ],
+        "summary": "Search Spanish CIE-10 entries",
+        "description": "Returns Spanish CIE-10/ICD-10 search/reference results by code or term. If no query is supplied, the endpoint returns top-level entries.",
+        "operationId": "searchCie10",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Search term or CIE-10 code, for example `diabetes`, `colera`, or `A00`.",
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "examples": {
+              "diagnosis": {
+                "summary": "Diagnosis search",
+                "value": "diabetes"
+              },
+              "code": {
+                "summary": "Code search",
+                "value": "A00"
+              }
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of results to return.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            },
+            "example": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CieSearchResponse"
+                },
+                "examples": {
+                  "diabetesLimit3": {
+                    "summary": "Search for diabetes, limit 3",
+                    "value": {
+                      "query": "diabetes",
+                      "total": 3,
+                      "results": [
+                        {
+                          "codigo": "E10",
+                          "nombre": "Diabetes mellitus insulinodependiente",
+                          "nivel": 2,
+                          "url": "/cie-10/e10"
+                        },
+                        {
+                          "codigo": "E10-E14",
+                          "nombre": "Diabetes mellitus",
+                          "nivel": 1,
+                          "url": "/cie-10/e10-e14"
+                        },
+                        {
+                          "codigo": "E11",
+                          "nombre": "Diabetes mellitus no insulinodependiente",
+                          "nivel": 2,
+                          "url": "/cie-10/e11"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CieSearchResponse": {
+        "type": "object",
+        "required": [
+          "query",
+          "total",
+          "results"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Echo of the submitted query."
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of returned results."
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CieSearchResult"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "CieSearchResult": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "nombre",
+          "nivel",
+          "url"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "description": "CIE-10 code or code range."
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Spanish display name."
+          },
+          "nivel": {
+            "type": "integer",
+            "description": "Hierarchy level returned by NotaSalud."
+          },
+          "url": {
+            "type": "string",
+            "description": "Relative NotaSalud reference page URL for this code or range."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

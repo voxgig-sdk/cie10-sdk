@@ -1,0 +1,22 @@
+# BasicCie10Flow
+
+main: kit: flow: BasicCie10Flow:
+{
+  entity: "cie_10",
+  kind: "basic",
+  name: "BasicCie10Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "cie_10_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCie10Flow"
+}

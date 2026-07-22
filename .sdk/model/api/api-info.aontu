@@ -1,0 +1,26 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      auth: false
+      contact: {
+        name: "NotaSalud"
+        url: "https://notasalud.com/"
+      }
+      description: "Public JSON endpoint for searching Spanish CIE-10/ICD-10 reference entries on NotaSalud. This API is for code/reference lookup and does not provide diagnosis, treatment advice, or clinical decision support."
+      servers: [
+        {
+          description: "NotaSalud production site"
+          url: "https://notasalud.com"
+        }
+      ]
+      summary: "Public JSON endpoint for searching Spanish CIE-10/ICD-10 reference entries on NotaSalud."
+      title: "NotaSalud CIE-10 Search API"
+      version: "1.0.0"
+      website: "https://notasalud.com/api-cie-10"
+    }
+  }
+}
+

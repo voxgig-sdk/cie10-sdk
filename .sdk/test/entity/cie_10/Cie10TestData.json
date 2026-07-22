@@ -1,0 +1,34 @@
+{
+  "existing": {
+    "cie_10": {
+      "CIE_1000": {
+        "codigo": "s28",
+        "nivel": "s29",
+        "nombre": "s2a",
+        "url": "s2b"
+      },
+      "CIE_1001": {
+        "codigo": "s50",
+        "nivel": "s51",
+        "nombre": "s52",
+        "url": "s53"
+      },
+      "CIE_1002": {
+        "codigo": "s78",
+        "nivel": "s79",
+        "nombre": "s7a",
+        "url": "s7b"
+      }
+    }
+  },
+  "new": {
+    "cie_10": {
+      "cie_10_ref01": {
+        "codigo": "sa0",
+        "nivel": "sa1",
+        "nombre": "sa2",
+        "url": "sa3"
+      }
+    }
+  }
+}
