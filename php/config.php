@@ -89,6 +89,7 @@ class Cie10Config
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/buscar/cie-10',
                   'parts' => [
@@ -103,7 +104,7 @@ class Cie10Config
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.results`',
                   ],
                   'index$' => 0,
                 ],

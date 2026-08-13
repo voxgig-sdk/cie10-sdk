@@ -67,7 +67,7 @@ main: kit: entity: cie_10: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.results`"
           }
         }
       ]

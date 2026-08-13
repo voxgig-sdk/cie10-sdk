@@ -218,9 +218,9 @@ data **directly** — there is no wrapper:
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local cie_10, err = client:Cie10():load()
+    local cie_10, err = client:Cie10():list()
     if err then error(err) end
-    -- cie_10 is the loaded record
+    -- cie_10 is the record list
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.

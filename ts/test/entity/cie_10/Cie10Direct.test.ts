@@ -24,6 +24,10 @@ describe('Cie10Direct', async () => {
 
   test('direct-exists', async () => {
     const sdk = new Cie10SDK({
+      // Concrete base: a live construction must satisfy any server
+      // variables a templated base URL declares; overriding base with a
+      // literal (as the direct flow tests do) sidesteps the requirement.
+      base: 'http://localhost:8080',
       system: { fetch: async () => ({}) }
     })
     assert('function' === typeof sdk.direct)
@@ -77,17 +81,17 @@ function directSetup(mockres?: any) {
   const calls: any[] = []
 
   const env = envOverride({
-    'CIE___TEST_CIE____ENTID': {},
-    'CIE___TEST_LIVE': 'FALSE',
+    'CIE10_TEST_CIE_10_ENTID': {},
+    'CIE10_TEST_LIVE': 'FALSE',
   })
 
-  const live = 'TRUE' === env.CIE___TEST_LIVE
+  const live = 'TRUE' === env.CIE10_TEST_LIVE
 
   if (live) {
     const client = new Cie10SDK({
     })
 
-    let idmap: any = env['CIE___TEST_CIE____ENTID']
+    let idmap: any = env['CIE10_TEST_CIE_10_ENTID']
     if ('string' === typeof idmap && idmap.startsWith('{')) {
       idmap = JSON.parse(idmap)
     }

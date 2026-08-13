@@ -16,11 +16,11 @@
 import pytest
 
 from projectname_sdk import Cie10SDK
-from core.error import Cie10Error
-from core.result import Cie10Result
-from core.response import Cie10Response
-from core.spec import Cie10Spec
-from feature.base_feature import Cie10BaseFeature
+from projectname_sdk.core.error import Cie10Error
+from projectname_sdk.core.result import Cie10Result
+from projectname_sdk.core.response import Cie10Response
+from projectname_sdk.core.spec import Cie10Spec
+from projectname_sdk.feature.base_feature import Cie10BaseFeature
 
 
 def _client():

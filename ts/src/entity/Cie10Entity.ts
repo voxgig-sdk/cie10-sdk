@@ -37,7 +37,7 @@ class Cie10Entity extends Cie10EntityBase<Cie10> {
 
 
 
-  async list(this: any, reqmatch?: Cie10ListMatch, ctrl?: Control): Promise<Cie10[]> {
+  async list(this: any, reqmatch?: Cie10ListMatch, ctrl?: Control): Promise<Cie10Entity[]> {
 
     const utility = this._utility
 

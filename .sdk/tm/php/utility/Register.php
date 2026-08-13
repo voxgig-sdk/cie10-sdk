@@ -23,6 +23,7 @@ require_once __DIR__ . '/MakeUrl.php';
 require_once __DIR__ . '/Param.php';
 require_once __DIR__ . '/PrepareAuth.php';
 require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
 require_once __DIR__ . '/PrepareHeaders.php';
 require_once __DIR__ . '/PrepareMethod.php';
 require_once __DIR__ . '/PrepareParams.php';
@@ -59,6 +60,8 @@ Cie10Utility::setRegistrar(function (Cie10Utility $u): void {
     $u->prepare_params = [Cie10PrepareParams::class, 'call'];
     $u->prepare_path = [Cie10PreparePath::class, 'call'];
     $u->prepare_query = [Cie10PrepareQuery::class, 'call'];
+    $u->graphql_body = [Cie10Graphql::class, 'body'];
+    $u->graphql_errors = [Cie10Graphql::class, 'errors'];
     $u->result_basic = [Cie10ResultBasic::class, 'call'];
     $u->result_body = [Cie10ResultBody::class, 'call'];
     $u->result_headers = [Cie10ResultHeaders::class, 'call'];

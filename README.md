@@ -38,9 +38,18 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = Cie10SDK.test()
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = Cie10SDK.test({
+  entity: {
+    cie_10: {
+      test01: { id: 'test01' },
+    },
+  },
+})
 const cie10s = await client.Cie10().list()
-// cie10s is an array of bare Cie10 records populated with mock data
+// cie10s is an array of Cie10 entities, populated with mock data
+// — call cie10s[0].data() for the record itself
 console.log(cie10s)
 ```
 
@@ -110,7 +119,7 @@ import { Cie10SDK } from '@voxgig-sdk/cie10'
 
 const client = new Cie10SDK()
 
-// List all cie10s (returns Cie10[])
+// List all cie10s (returns Cie10Entity[] — .data() for the record)
 const cie10s = await client.Cie10().list()
 for (const cie10 of cie10s) {
   console.log(cie10)
@@ -343,6 +352,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://notasalud.com/](https://notasalud.com/)
 

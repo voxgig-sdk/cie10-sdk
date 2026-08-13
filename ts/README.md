@@ -35,7 +35,9 @@ const client = new Cie10SDK()
 
 ### 2. List cie10 records
 
-`list()` resolves to an array of Cie10 objects — iterate it directly:
+`list()` resolves to an array of Cie10 ENTITIES — every operation
+resolves to entities, not raw records. Iterate them directly, and call
+`.data()` on one for the record it holds:
 
 ```ts
 const cie10s = await client.Cie10().list()
@@ -120,7 +122,8 @@ Create a mock client for unit testing — no server required:
 const client = Cie10SDK.test()
 
 const cie10 = await client.Cie10().list()
-// cie10 is a bare entity populated with mock response data
+// cie10 is the entity, populated with mock response data
+// — call cie10.data() for the record itself
 console.log(cie10)
 ```
 

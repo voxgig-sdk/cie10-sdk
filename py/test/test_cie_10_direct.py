@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from cie10_sdk.utility.voxgig_struct import voxgig_struct as vs
 from cie10_sdk import Cie10SDK
-from core import helpers
+from cie10_sdk.core import helpers
 from test import runner
 
 
@@ -58,11 +58,11 @@ def _cie_10_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "CIE___TEST_CIE____ENTID": {},
-        "CIE___TEST_LIVE": "FALSE",
+        "CIE10_TEST_CIE_10_ENTID": {},
+        "CIE10_TEST_LIVE": "FALSE",
     })
 
-    live = env.get("CIE___TEST_LIVE") == "TRUE"
+    live = env.get("CIE10_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {

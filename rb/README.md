@@ -119,7 +119,8 @@ Create a mock client for unit testing — no server required:
 ```ruby
 client = Cie10SDK.test
 
-# Entity ops return the bare mock record (raises on error).
+# Entity ops return the ENTITY (raises on error);
+# call data_get for the mock record.
 cie10 = client.Cie10.list()
 puts cie10
 ```

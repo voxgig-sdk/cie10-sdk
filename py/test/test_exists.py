@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# Cie10 SDK exists test
 
 import pytest
 from cie10_sdk import Cie10SDK

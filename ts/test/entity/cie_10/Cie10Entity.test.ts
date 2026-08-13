@@ -38,7 +38,7 @@ describe('Cie10Entity', async () => {
 
   test('basic', async (t) => {
 
-    const live = 'TRUE' === process.env.CIE___TEST_LIVE
+    const live = 'TRUE' === process.env.CIE10_TEST_LIVE
     for (const op of ['list']) {
       if (maybeSkipControl(t, 'entityOp', 'cie_10.' + op, live)) return
     }
@@ -48,7 +48,7 @@ describe('Cie10Entity', async () => {
     // fixture (entity TestData.json). Those don't exist on the live API.
     // Skip live runs unless the user provided a real ENTID env override.
     if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set CIE___TEST_CIE____ENTID JSON to run live')
+      t.skip('live entity test uses synthetic IDs from fixture — set CIE10_TEST_CIE_10_ENTID JSON to run live')
       return
     }
     const client = setup.client
@@ -63,7 +63,7 @@ describe('Cie10Entity', async () => {
     const cie_10_ref01_ent = client.Cie10()
     const cie_10_ref01_match: any = {}
 
-    const cie_10_ref01_list = await cie_10_ref01_ent.list(cie_10_ref01_match)
+    const cie_10_ref01_list = (await cie_10_ref01_ent.list(cie_10_ref01_match)).map((e: any) => e.data())
 
 
   })
@@ -106,18 +106,18 @@ function basicSetup(extra?: any) {
   // basic flow consumes synthetic IDs from the fixture file; without an
   // override those synthetic IDs reach the live API and 4xx. Surface this
   // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['CIE___TEST_CIE____ENTID']
+  const idmapEnvVal = process.env['CIE10_TEST_CIE_10_ENTID']
   const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
 
   const env = envOverride({
-    'CIE___TEST_CIE____ENTID': idmap,
-    'CIE___TEST_LIVE': 'FALSE',
-    'CIE___TEST_EXPLAIN': 'FALSE',
+    'CIE10_TEST_CIE_10_ENTID': idmap,
+    'CIE10_TEST_LIVE': 'FALSE',
+    'CIE10_TEST_EXPLAIN': 'FALSE',
   })
 
-  idmap = env['CIE___TEST_CIE____ENTID']
+  idmap = env['CIE10_TEST_CIE_10_ENTID']
 
-  const live = 'TRUE' === env.CIE___TEST_LIVE
+  const live = 'TRUE' === env.CIE10_TEST_LIVE
 
   if (live) {
     client = new Cie10SDK(merge([
@@ -134,7 +134,7 @@ function basicSetup(extra?: any) {
     client,
     struct,
     data: entityData,
-    explain: 'TRUE' === env.CIE___TEST_EXPLAIN,
+    explain: 'TRUE' === env.CIE10_TEST_EXPLAIN,
     live,
     syntheticOnly: live && !idmapOverridden,
     now: Date.now(),

@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ Cie10Utility.registrar = ->(u) {
   u.prepare_params = Cie10Utilities::PrepareParams
   u.prepare_path = Cie10Utilities::PreparePath
   u.prepare_query = Cie10Utilities::PrepareQuery
+  u.graphql_body = Cie10Utilities::GraphqlBody
+  u.graphql_errors = Cie10Utilities::GraphqlErrors
   u.result_basic = Cie10Utilities::ResultBasic
   u.result_body = Cie10Utilities::ResultBody
   u.result_headers = Cie10Utilities::ResultHeaders

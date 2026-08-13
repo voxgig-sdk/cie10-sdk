@@ -92,7 +92,7 @@ func TestCie10Entity(t *testing.T) {
 		// The basic flow consumes synthetic IDs from the fixture. In live mode
 		// without an *_ENTID env override, those IDs hit the live API and 4xx.
 		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set CIE___TEST_CIE____ENTID JSON to run live")
+			t.Skip("live entity test uses synthetic IDs from fixture — set CIE10_TEST_CIE_10_ENTID JSON to run live")
 			return
 		}
 		client := setup.client
@@ -160,21 +160,21 @@ func cie_10BasicSetup(extra map[string]any) *entityTestSetup {
 	// Detect ENTID env override before envOverride consumes it. When live
 	// mode is on without a real override, the basic test runs against synthetic
 	// IDs from the fixture and 4xx's. Surface this so the test can skip.
-	entidEnvRaw := os.Getenv("CIE___TEST_CIE____ENTID")
+	entidEnvRaw := os.Getenv("CIE10_TEST_CIE_10_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 
 	env := envOverride(map[string]any{
-		"CIE___TEST_CIE____ENTID": idmap,
-		"CIE___TEST_LIVE":      "FALSE",
-		"CIE___TEST_EXPLAIN":   "FALSE",
+		"CIE10_TEST_CIE_10_ENTID": idmap,
+		"CIE10_TEST_LIVE":      "FALSE",
+		"CIE10_TEST_EXPLAIN":   "FALSE",
 	})
 
-	idmapResolved := core.ToMapAny(env["CIE___TEST_CIE____ENTID"])
+	idmapResolved := core.ToMapAny(env["CIE10_TEST_CIE_10_ENTID"])
 	if idmapResolved == nil {
 		idmapResolved = core.ToMapAny(idmap)
 	}
 
-	if env["CIE___TEST_LIVE"] == "TRUE" {
+	if env["CIE10_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
 			},
@@ -183,13 +183,13 @@ func cie_10BasicSetup(extra map[string]any) *entityTestSetup {
 		client = sdk.NewCie10SDK(core.ToMapAny(mergedOpts))
 	}
 
-	live := env["CIE___TEST_LIVE"] == "TRUE"
+	live := env["CIE10_TEST_LIVE"] == "TRUE"
 	return &entityTestSetup{
 		client:        client,
 		data:          entityData,
 		idmap:         idmapResolved,
 		env:           env,
-		explain:       env["CIE___TEST_EXPLAIN"] == "TRUE",
+		explain:       env["CIE10_TEST_EXPLAIN"] == "TRUE",
 		live:          live,
 		syntheticOnly: live && !idmapOverridden,
 		now:           time.Now().UnixMilli(),

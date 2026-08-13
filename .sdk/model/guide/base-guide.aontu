@@ -8,6 +8,7 @@ guide: {
   entity: cie_10: {
     path: "/buscar/cie-10": {
       op: list: method: *GET
+      op: list: transform: res: *("`body.results`")|top
     }
   }
 

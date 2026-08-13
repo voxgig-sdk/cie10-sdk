@@ -61,11 +61,11 @@ function cie_10_direct_setup(mockres)
   local calls = {}
 
   local env = runner.env_override({
-    ["CIE___TEST_CIE____ENTID"] = {},
-    ["CIE___TEST_LIVE"] = "FALSE",
+    ["CIE10_TEST_CIE_10_ENTID"] = {},
+    ["CIE10_TEST_LIVE"] = "FALSE",
   })
 
-  local live = env["CIE___TEST_LIVE"] == "TRUE"
+  local live = env["CIE10_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {

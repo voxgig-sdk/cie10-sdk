@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import Cie10Control
-from core.error import Cie10Error
-from core.result import Cie10Result
-from core.spec import Cie10Spec
+from projectname_sdk.config import make_config
+from projectname_sdk.features import _make_feature
+from projectname_sdk.core.control import Cie10Control
+from projectname_sdk.core.error import Cie10Error
+from projectname_sdk.core.result import Cie10Result
+from projectname_sdk.core.spec import Cie10Spec
 
 
 # True when this SDK was generated with the named feature.
