@@ -15,7 +15,7 @@ require_relative "../Cie10_sdk"
 module Cie10FeatureHarness
   # True when this SDK was generated with the named feature.
   def self.has_feature?(name)
-    f = Cie10Config.make_config["feature"]
+    f = Cie10Config.shared_config["feature"]
     f.is_a?(Hash) && !f[name].nil?
   end
 

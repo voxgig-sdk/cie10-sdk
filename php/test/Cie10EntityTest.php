@@ -40,7 +40,7 @@ class Cie10EntityTest extends TestCase
         $this->assertCount(3, $seen);
 
         // Inbound: streaming active -> yields each item from the feature.
-        $cfg = Cie10Config::make_config();
+        $cfg = Cie10Config::shared_config();
         if (isset($cfg["feature"]) && is_array($cfg["feature"]) && isset($cfg["feature"]["streaming"])) {
             $sdk = Cie10SDK::test($seed, ["feature" => ["streaming" => ["active" => true]]]);
             $got = [];

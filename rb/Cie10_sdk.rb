@@ -28,7 +28,7 @@ class Cie10SDK
     utility = Cie10Utility.new
     @_utility = utility
 
-    config = Cie10Config.make_config
+    config = Cie10Config.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,

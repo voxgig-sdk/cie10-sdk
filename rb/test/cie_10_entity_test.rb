@@ -33,7 +33,7 @@ class Cie10EntityTest < Minitest::Test
     assert_equal 3, seen.length
 
     # Inbound: streaming active -> yields each item from the feature.
-    cfg = Cie10Config.make_config
+    cfg = Cie10Config.shared_config
     if cfg["feature"].is_a?(Hash) && cfg["feature"].key?("streaming")
       sdk = Cie10SDK.test(seed, { "feature" => { "streaming" => { "active" => true } } })
       got = []

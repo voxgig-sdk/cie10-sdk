@@ -40,7 +40,7 @@ class Cie10SDK
         $utility = new Cie10Utility();
         $this->_utility = $utility;
 
-        $config = Cie10Config::make_config();
+        $config = Cie10Config::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,
