@@ -28,6 +28,9 @@ def make_config():
     return {
         "main": {
             "name": "Cie10",
+            "slug": "cie10",
+            "version": "0.0.1",
+            "target": "py",
         },
         "feature": {
             "test": {
@@ -51,21 +54,25 @@ def make_config():
           {
             "name": "codigo",
             "req": True,
+            "short": "CIE-10 code or code range.",
             "type": "`$STRING`",
           },
           {
             "name": "nivel",
             "req": True,
+            "short": "Hierarchy level returned by NotaSalud.",
             "type": "`$INTEGER`",
           },
           {
             "name": "nombre",
             "req": True,
+            "short": "Spanish display name.",
             "type": "`$STRING`",
           },
           {
             "name": "url",
             "req": True,
+            "short": "Relative NotaSalud reference page URL for this code or range.",
             "type": "`$STRING`",
           },
         ],

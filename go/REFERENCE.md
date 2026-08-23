@@ -98,10 +98,10 @@ fmt.Println(cie10.GetName()) // "cie_10"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `codigo` | `string` | Yes |  |
-| `nivel` | `int` | Yes |  |
-| `nombre` | `string` | Yes |  |
-| `url` | `string` | Yes |  |
+| `codigo` | `string` | Yes | CIE-10 code or code range. |
+| `nivel` | `int` | Yes | Hierarchy level returned by NotaSalud. |
+| `nombre` | `string` | Yes | Spanish display name. |
+| `url` | `string` | Yes | Relative NotaSalud reference page URL for this code or range. |
 
 ### Operations
 

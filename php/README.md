@@ -247,10 +247,10 @@ On error, `ok` is `false` and `$err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `codigo` |  |
-| `nivel` |  |
-| `nombre` |  |
-| `url` |  |
+| `codigo` | CIE-10 code or code range. |
+| `nivel` | Hierarchy level returned by NotaSalud. |
+| `nombre` | Spanish display name. |
+| `url` | Relative NotaSalud reference page URL for this code or range. |
 
 Operations: List.
 
@@ -275,10 +275,10 @@ Create an instance: `$cie_10 = $client->Cie10();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `codigo` | `string` |  |
-| `nivel` | `int` |  |
-| `nombre` | `string` |  |
-| `url` | `string` |  |
+| `codigo` | `string` | CIE-10 code or code range. |
+| `nivel` | `int` | Hierarchy level returned by NotaSalud. |
+| `nombre` | `string` | Spanish display name. |
+| `url` | `string` | Relative NotaSalud reference page URL for this code or range. |
 
 #### Example: List
 

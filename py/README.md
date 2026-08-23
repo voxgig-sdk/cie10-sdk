@@ -243,10 +243,10 @@ On error, `ok` is `False` and `err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `codigo` |  |
-| `nivel` |  |
-| `nombre` |  |
-| `url` |  |
+| `codigo` | CIE-10 code or code range. |
+| `nivel` | Hierarchy level returned by NotaSalud. |
+| `nombre` | Spanish display name. |
+| `url` | Relative NotaSalud reference page URL for this code or range. |
 
 Operations: List.
 
@@ -271,10 +271,10 @@ Create an instance: `cie_10 = client.Cie10()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `codigo` | `str` |  |
-| `nivel` | `int` |  |
-| `nombre` | `str` |  |
-| `url` | `str` |  |
+| `codigo` | `str` | CIE-10 code or code range. |
+| `nivel` | `int` | Hierarchy level returned by NotaSalud. |
+| `nombre` | `str` | Spanish display name. |
+| `url` | `str` | Relative NotaSalud reference page URL for this code or range. |
 
 #### Example: List
 

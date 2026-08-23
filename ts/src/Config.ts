@@ -19,9 +19,20 @@ class Config {
     return fi
   }
 
+  // False for a feature added at runtime via options.extend (station's
+  // adopt path) - the constructor uses this to skip makeFeature for names
+  // no generated class backs.
+  hasFeature(this: any, fn: string) {
+    return null != FEATURE_CLASS[fn]
+  }
+
 
   main = {
     name: 'Cie10',
+        slug: "cie10",
+    version: "0.0.1",
+    target: "ts",
+
   }
 
 
@@ -57,21 +68,25 @@ class Config {
         {
           "name": "codigo",
           "req": true,
+          "short": "CIE-10 code or code range.",
           "type": "`$STRING`"
         },
         {
           "name": "nivel",
           "req": true,
+          "short": "Hierarchy level returned by NotaSalud.",
           "type": "`$INTEGER`"
         },
         {
           "name": "nombre",
           "req": true,
+          "short": "Spanish display name.",
           "type": "`$STRING`"
         },
         {
           "name": "url",
           "req": true,
+          "short": "Relative NotaSalud reference page URL for this code or range.",
           "type": "`$STRING`"
         }
       ],

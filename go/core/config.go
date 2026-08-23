@@ -11,6 +11,9 @@ func MakeConfig() map[string]any {
 	return map[string]any{
 		"main": map[string]any{
 			"name": "Cie10",
+			"slug": "cie10",
+			"version": "0.0.1",
+			"target": "go",
 		},
 		"feature": map[string]any{
 			"test": map[string]any{
@@ -34,21 +37,25 @@ func MakeConfig() map[string]any {
 					map[string]any{
 						"name": "codigo",
 						"req": true,
+						"short": "CIE-10 code or code range.",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "nivel",
 						"req": true,
+						"short": "Hierarchy level returned by NotaSalud.",
 						"type": "`$INTEGER`",
 					},
 					map[string]any{
 						"name": "nombre",
 						"req": true,
+						"short": "Spanish display name.",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "url",
 						"req": true,
+						"short": "Relative NotaSalud reference page URL for this code or range.",
 						"type": "`$STRING`",
 					},
 				},

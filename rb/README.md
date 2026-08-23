@@ -237,10 +237,10 @@ returns a result `Hash` with these keys:
 
 | Field | Description |
 | --- | --- |
-| `codigo` |  |
-| `nivel` |  |
-| `nombre` |  |
-| `url` |  |
+| `codigo` | CIE-10 code or code range. |
+| `nivel` | Hierarchy level returned by NotaSalud. |
+| `nombre` | Spanish display name. |
+| `url` | Relative NotaSalud reference page URL for this code or range. |
 
 Operations: List.
 
@@ -265,10 +265,10 @@ Create an instance: `cie_10 = client.Cie10`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `codigo` | `String` |  |
-| `nivel` | `Integer` |  |
-| `nombre` | `String` |  |
-| `url` | `String` |  |
+| `codigo` | `String` | CIE-10 code or code range. |
+| `nivel` | `Integer` | Hierarchy level returned by NotaSalud. |
+| `nombre` | `String` | Spanish display name. |
+| `url` | `String` | Relative NotaSalud reference page URL for this code or range. |
 
 #### Example: List
 

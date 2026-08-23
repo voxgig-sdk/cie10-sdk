@@ -87,10 +87,10 @@ cie_10 = client.Cie10()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `codigo` | `str` | Yes |  |
-| `nivel` | `int` | Yes |  |
-| `nombre` | `str` | Yes |  |
-| `url` | `str` | Yes |  |
+| `codigo` | `str` | Yes | CIE-10 code or code range. |
+| `nivel` | `int` | Yes | Hierarchy level returned by NotaSalud. |
+| `nombre` | `str` | Yes | Spanish display name. |
+| `url` | `str` | Yes | Relative NotaSalud reference page URL for this code or range. |
 
 ### Operations
 

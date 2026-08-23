@@ -90,10 +90,10 @@ local cie_10 = client:Cie10(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `codigo` | `string` | Yes |  |
-| `nivel` | `number` | Yes |  |
-| `nombre` | `string` | Yes |  |
-| `url` | `string` | Yes |  |
+| `codigo` | `string` | Yes | CIE-10 code or code range. |
+| `nivel` | `number` | Yes | Hierarchy level returned by NotaSalud. |
+| `nombre` | `string` | Yes | Spanish display name. |
+| `url` | `string` | Yes | Relative NotaSalud reference page URL for this code or range. |
 
 ### Operations
 

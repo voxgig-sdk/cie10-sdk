@@ -6,7 +6,7 @@ The Golang SDK for the Cie10 API — an entity-oriented client using standard Go
 
 It exposes the API as capitalised, semantic **Entities** — e.g. `client.Cie10(nil)` — each with the same small set of operations (`List`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
-> Other languages, the CLI, and MCP server live alongside this one — see
+> Also generated from this model: `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb`, `ts` — see
 > the [top-level README](../README.md).
 
 
@@ -260,10 +260,10 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 
 | Field | Description |
 | --- | --- |
-| `"codigo"` |  |
-| `"nivel"` |  |
-| `"nombre"` |  |
-| `"url"` |  |
+| `"codigo"` | CIE-10 code or code range. |
+| `"nivel"` | Hierarchy level returned by NotaSalud. |
+| `"nombre"` | Spanish display name. |
+| `"url"` | Relative NotaSalud reference page URL for this code or range. |
 
 Operations: List.
 
@@ -288,10 +288,10 @@ Create an instance: `cie10 := client.Cie10(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `codigo` | `string` |  |
-| `nivel` | `int` |  |
-| `nombre` | `string` |  |
-| `url` | `string` |  |
+| `codigo` | `string` | CIE-10 code or code range. |
+| `nivel` | `int` | Hierarchy level returned by NotaSalud. |
+| `nombre` | `string` | Spanish display name. |
+| `url` | `string` | Relative NotaSalud reference page URL for this code or range. |
 
 #### Example: List
 

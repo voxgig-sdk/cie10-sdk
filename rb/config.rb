@@ -19,6 +19,9 @@ module Cie10Config
     {
       "main" => {
         "name" => "Cie10",
+        "slug" => "cie10",
+        "version" => "0.0.1",
+        "target" => "rb",
       },
       "feature" => {
         "test" => {
@@ -42,21 +45,25 @@ module Cie10Config
             {
               "name" => "codigo",
               "req" => true,
+              "short" => "CIE-10 code or code range.",
               "type" => "`$STRING`",
             },
             {
               "name" => "nivel",
               "req" => true,
+              "short" => "Hierarchy level returned by NotaSalud.",
               "type" => "`$INTEGER`",
             },
             {
               "name" => "nombre",
               "req" => true,
+              "short" => "Spanish display name.",
               "type" => "`$STRING`",
             },
             {
               "name" => "url",
               "req" => true,
+              "short" => "Relative NotaSalud reference page URL for this code or range.",
               "type" => "`$STRING`",
             },
           ],
