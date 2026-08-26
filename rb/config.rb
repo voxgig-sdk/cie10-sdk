@@ -28,6 +28,7 @@ module Cie10Config
           "options" => {
             "active" => false,
           },
+          "transport" => "base",
         },
       },
       "options" => {
