@@ -13,9 +13,7 @@ export interface Cie10 {
 }
 
 export interface Cie10ListMatch {
-  codigo?: string
-  nivel?: number
-  nombre?: string
-  url?: string
+  limit?: number
+  q?: string
 }
 

@@ -31,22 +31,14 @@ Cie10 = Struct.new(
 
 # Request payload for Cie10#list.
 #
-# @!attribute [rw] codigo
-#   @return [String, nil]
-#
-# @!attribute [rw] nivel
+# @!attribute [rw] limit
 #   @return [Integer, nil]
 #
-# @!attribute [rw] nombre
-#   @return [String, nil]
-#
-# @!attribute [rw] url
+# @!attribute [rw] q
 #   @return [String, nil]
 Cie10ListMatch = Struct.new(
-  :codigo,
-  :nivel,
-  :nombre,
-  :url,
+  :limit,
+  :q,
   keyword_init: true
 )
 

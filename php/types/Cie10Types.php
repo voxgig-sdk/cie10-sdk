@@ -24,9 +24,7 @@ class Cie10
 /** Request payload for Cie10#list. */
 class Cie10ListMatch
 {
-    public ?string $codigo = null;
-    public ?int $nivel = null;
-    public ?string $nombre = null;
-    public ?string $url = null;
+    public ?int $limit = null;
+    public ?string $q = null;
 }
 

@@ -13,10 +13,8 @@
 ---@field url string
 
 ---@class Cie10ListMatch
----@field codigo? string
----@field nivel? number
----@field nombre? string
----@field url? string
+---@field limit? number
+---@field q? string
 
 local M = {}
 

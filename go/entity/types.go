@@ -22,10 +22,8 @@ type Cie10 struct {
 
 // Cie10ListMatch is the typed request payload for Cie10.ListTyped.
 type Cie10ListMatch struct {
-	Codigo *string `json:"codigo,omitempty"`
-	Nivel *int `json:"nivel,omitempty"`
-	Nombre *string `json:"nombre,omitempty"`
-	Url *string `json:"url,omitempty"`
+	Limit *int `json:"limit,omitempty"`
+	Q *string `json:"q,omitempty"`
 }
 
 // asMap turns a typed request/data struct into the map[string]any the

@@ -24,7 +24,5 @@ class Cie10(TypedDict):
 
 
 class Cie10ListMatch(TypedDict, total=False):
-    codigo: str
-    nivel: int
-    nombre: str
-    url: str
+    limit: int
+    q: str
