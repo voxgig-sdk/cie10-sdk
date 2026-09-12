@@ -96,9 +96,13 @@ module Cie10Config
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/buscar/cie-10",
-                  "parts" => [
-                    "buscar",
-                    "cie-10",
+                  "segments" => [
+                    {
+                      "lit" => "buscar",
+                    },
+                    {
+                      "lit" => "cie-10",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -110,6 +114,10 @@ module Cie10Config
                     "req" => "`reqdata`",
                     "res" => "`body.results`",
                   },
+                  "parts" => [
+                    "buscar",
+                    "cie-10",
+                  ],
                 },
               ],
             },

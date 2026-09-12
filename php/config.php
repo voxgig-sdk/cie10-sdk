@@ -110,9 +110,13 @@ class Cie10Config
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/buscar/cie-10',
-                  'parts' => [
-                    'buscar',
-                    'cie-10',
+                  'segments' => [
+                    [
+                      'lit' => 'buscar',
+                    ],
+                    [
+                      'lit' => 'cie-10',
+                    ],
                   ],
                   'select' => [
                     'exist' => [
@@ -123,6 +127,10 @@ class Cie10Config
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.results`',
+                  ],
+                  'parts' => [
+                    'buscar',
+                    'cie-10',
                   ],
                 ],
               ],

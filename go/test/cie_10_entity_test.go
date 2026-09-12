@@ -98,7 +98,7 @@ func TestCie10Entity(t *testing.T) {
 		client := setup.client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
-		cie10Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath("existing.cie_10", setup.data)))
+		cie10Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.cie_10")))
 		var cie10Ref01Data map[string]any
 		if len(cie10Ref01DataRaw) > 0 {
 			cie10Ref01Data = core.ToMapAny(cie10Ref01DataRaw[0][1])
@@ -147,7 +147,7 @@ func cie_10BasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"cie_1001", "cie_1002", "cie_1003"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -175,10 +175,22 @@ func cie_10BasicSetup(extra map[string]any) *entityTestSetup {
 	}
 
 	if env["CIE10_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewCie10SDK(core.ToMapAny(mergedOpts))
 	}

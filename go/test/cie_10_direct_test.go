@@ -99,7 +99,15 @@ func cie_10DirectSetup(mockres any) *cie_10DirectSetupResult {
 	live := env["CIE10_TEST_LIVE"] == "TRUE"
 
 	if live {
-		mergedOpts := map[string]any{
+		// sdk-test-control.json's test.client.options seeds the live
+		// client; the generated fields below overwrite anything they name.
+		mergedOpts := map[string]any{}
+		for k, v := range liveClientOptions() {
+			mergedOpts[k] = v
+		}
+		for k, v := range map[string]any{
+		} {
+			mergedOpts[k] = v
 		}
 		client := sdk.NewCie10SDK(mergedOpts)
 
