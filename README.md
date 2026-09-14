@@ -105,7 +105,7 @@ local results, err = client:Cie10():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/cie10` | publish pending — [install from git tag](https://github.com/voxgig-sdk/cie10-sdk/releases) |
+| TypeScript | `@voxgig-sdk/cie10-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/cie10-sdk/releases) |
 | Python | `voxgig-sdk-cie10` | publish pending — [install from git tag](https://github.com/voxgig-sdk/cie10-sdk/releases) |
 | PHP | `voxgig-sdk/cie10` | publish pending — [install from git tag](https://github.com/voxgig-sdk/cie10-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/cie10-sdk/go` | `go get github.com/voxgig-sdk/cie10-sdk/go@latest` |
@@ -119,7 +119,7 @@ local results, err = client:Cie10():list()
 ### TypeScript
 
 ```ts
-import { Cie10SDK } from '@voxgig-sdk/cie10'
+import { Cie10SDK } from '@voxgig-sdk/cie10-sdk'
 
 const client = new Cie10SDK()
 

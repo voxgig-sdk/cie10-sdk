@@ -28,7 +28,7 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { Cie10SDK } from '@voxgig-sdk/cie10'
+import { Cie10SDK } from '@voxgig-sdk/cie10-sdk'
 
 const client = new Cie10SDK()
 ```
@@ -409,7 +409,7 @@ cie10/
 Import the SDK from the package root:
 
 ```ts
-import { Cie10SDK } from '@voxgig-sdk/cie10'
+import { Cie10SDK } from '@voxgig-sdk/cie10-sdk'
 ```
 
 ### Entity state
