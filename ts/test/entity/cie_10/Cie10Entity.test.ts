@@ -5,6 +5,8 @@ import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
 import { Cie10SDK, BaseFeature, stdutil } from '../../..'
@@ -47,16 +49,13 @@ describe('Cie10Entity', async () => {
 
     const live = 'TRUE' === process.env.CIE10_TEST_LIVE
     for (const op of ['list']) {
-      if (maybeSkipControl(t, 'entityOp', 'cie_10.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'cie_10.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set CIE10_TEST_CIE_10_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":[{"active":true,"name":"codigo","req":true,"short":"CIE-10 code or code range.","type":"`$STRING`","index$":0},{"active":true,"name":"nivel","req":true,"short":"Hierarchy level returned by NotaSalud.","type":"`$INTEGER`","index$":1},{"active":true,"name":"nombre","req":true,"short":"Spanish display name.","type":"`$STRING`","index$":2},{"active":true,"name":"url","req":true,"short":"Relative NotaSalud reference page URL for this code or range.","type":"`$STRING`","index$":3}],"name":"cie_10","op":{"list":{"input":"data","name":"list","points":[{"active":true,"args":{"query":[{"active":true,"example":3,"kind":"query","name":"limit","orig":"limit","reqd":false,"type":"`$INTEGER`","index$":0},{"active":true,"example":"diabetes","kind":"query","name":"q","orig":"q","reqd":false,"type":"`$STRING`","index$":1}]},"contract":{"id":"GET /buscar/cie-10","json":"{\"operationId\":\"searchCie10\",\"parameters\":[{\"description\":\"Search term or CIE-10 code, for example `diabetes`, `colera`, or `A00`.\",\"examples\":{\"code\":{\"summary\":\"Code search\",\"value\":\"A00\"},\"diagnosis\":{\"summary\":\"Diagnosis search\",\"value\":\"diabetes\"}},\"in\":\"query\",\"name\":\"q\",\"required\":false,\"schema\":{\"minLength\":1,\"type\":\"string\"}},{\"description\":\"Maximum number of results to return.\",\"example\":3,\"in\":\"query\",\"name\":\"limit\",\"required\":false,\"schema\":{\"default\":25,\"maximum\":100,\"minimum\":1,\"type\":\"integer\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"diabetesLimit3\":{\"summary\":\"Search for diabetes, limit 3\",\"value\":{\"query\":\"diabetes\",\"results\":[{\"codigo\":\"E10\",\"nivel\":2,\"nombre\":\"Diabetes mellitus insulinodependiente\",\"url\":\"/cie-10/e10\"},{\"codigo\":\"E10-E14\",\"nivel\":1,\"nombre\":\"Diabetes mellitus\",\"url\":\"/cie-10/e10-e14\"},{\"codigo\":\"E11\",\"nivel\":2,\"nombre\":\"Diabetes mellitus no insulinodependiente\",\"url\":\"/cie-10/e11\"}],\"total\":3}}},\"schema\":{\"additionalProperties\":false,\"properties\":{\"query\":{\"description\":\"Echo of the submitted query.\",\"type\":\"string\"},\"results\":{\"items\":{\"additionalProperties\":false,\"properties\":{\"codigo\":{\"description\":\"CIE-10 code or code range.\",\"type\":\"string\"},\"nivel\":{\"description\":\"Hierarchy level returned by NotaSalud.\",\"type\":\"integer\"},\"nombre\":{\"description\":\"Spanish display name.\",\"type\":\"string\"},\"url\":{\"description\":\"Relative NotaSalud reference page URL for this code or range.\",\"type\":\"string\"}},\"required\":[\"codigo\",\"nombre\",\"nivel\",\"url\"],\"type\":\"object\"},\"type\":\"array\"},\"total\":{\"description\":\"Number of returned results.\",\"minimum\":0,\"type\":\"integer\"}},\"required\":[\"query\",\"total\",\"results\"],\"type\":\"object\"}}},\"description\":\"Search results\"}},\"securitySource\":\"unspecified\"}","source":"openapi3","version":1},"kind":"http","method":"GET","orig":"/buscar/cie-10","segments":[{"lit":"buscar"},{"lit":"cie-10"}],"select":{"exist":["limit","q"]},"transform":{"req":"`reqdata`","res":"`body.results`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"cie_10","name__orig":"cie_10","Name":"Cie10","name_":"cie_10","name-":"cie-10","NAME":"CIE_10","index$":0}, {"active":true,"entity":"cie_10","key$":"BasicCie10Flow","kind":"basic","name":"BasicCie10Flow","param":{},"step":[{"active":true,"data":{},"input":{},"match":{},"op":"list","spec":[],"valid":[{"apply":"ItemExists","def":{"ref":"cie_10_ref01"}}],"index$":0}]}, 'Cie10')
     }
     const client = setup.client
     const struct = setup.struct
@@ -109,13 +108,6 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['CIE10_TEST_CIE_10_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'CIE10_TEST_CIE_10_ENTID': idmap,
     'CIE10_TEST_LIVE': 'FALSE',
@@ -126,7 +118,13 @@ function basicSetup(extra?: any) {
 
   const live = 'TRUE' === env.CIE10_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['CIE10_TEST_CIE_10_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new Cie10SDK(merge([
       // FIRST, so the generated fields below win: sdk-test-control.json's
       // test.client.options adds to the live client, it does not redirect it.
@@ -138,7 +136,8 @@ function basicSetup(extra?: any) {
       // argument at all - so a bare 'extra' silently discarded the apikey
       // and server values above and handed the SDK undefined. Harmless
       // while there was nothing in that object; not harmless now.
-      extra || {}
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -151,7 +150,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.CIE10_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 

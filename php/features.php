@@ -4,7 +4,10 @@ declare(strict_types=1);
 // Cie10 SDK feature factory
 
 require_once __DIR__ . '/feature/BaseFeature.php';
+require_once __DIR__ . '/feature/RatelimitFeature.php';
+require_once __DIR__ . '/feature/RetryFeature.php';
 require_once __DIR__ . '/feature/TestFeature.php';
+require_once __DIR__ . '/feature/TimeoutFeature.php';
 
 
 class Cie10Features
@@ -14,8 +17,14 @@ class Cie10Features
         switch ($name) {
             case "base":
                 return new Cie10BaseFeature();
+            case "ratelimit":
+                return new Cie10RatelimitFeature();
+            case "retry":
+                return new Cie10RetryFeature();
             case "test":
                 return new Cie10TestFeature();
+            case "timeout":
+                return new Cie10TimeoutFeature();
             default:
                 return new Cie10BaseFeature();
         }
@@ -31,7 +40,10 @@ class Cie10Features
     {
         switch ($name) {
             case "base":
+            case "ratelimit":
+            case "retry":
             case "test":
+            case "timeout":
                 return true;
             default:
                 return false;
