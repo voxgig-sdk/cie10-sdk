@@ -127,9 +127,9 @@ class Config {
 
     entity: {
       
-      cie_10: {
-      },
-
+        cie_10: {
+        },
+  
     }
   }
 
