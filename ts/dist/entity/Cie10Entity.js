@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cie10Entity = void 0;
 const Cie10EntityBase_1 = require("../Cie10EntityBase");
-// TODO: needs Entity superclass
 class Cie10Entity extends Cie10EntityBase_1.Cie10EntityBase {
     constructor(client, entopts) {
         super(client, entopts);

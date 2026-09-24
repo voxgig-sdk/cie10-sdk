@@ -87,27 +87,31 @@ local function make_config()
         ["fields"] = {
           {
             ["name"] = "codigo",
+            ["title"] = "Codigo",
+            ["type"] = "`$STRING`",
             ["req"] = true,
             ["short"] = "CIE-10 code or code range.",
-            ["type"] = "`$STRING`",
           },
           {
             ["name"] = "nivel",
+            ["title"] = "Nivel",
+            ["type"] = "`$INTEGER`",
             ["req"] = true,
             ["short"] = "Hierarchy level returned by NotaSalud.",
-            ["type"] = "`$INTEGER`",
           },
           {
             ["name"] = "nombre",
+            ["title"] = "Nombre",
+            ["type"] = "`$STRING`",
             ["req"] = true,
             ["short"] = "Spanish display name.",
-            ["type"] = "`$STRING`",
           },
           {
             ["name"] = "url",
+            ["title"] = "Url",
+            ["type"] = "`$STRING`",
             ["req"] = true,
             ["short"] = "Relative NotaSalud reference page URL for this code or range.",
-            ["type"] = "`$STRING`",
           },
         },
         ["name"] = "cie_10",
@@ -117,24 +121,6 @@ local function make_config()
             ["name"] = "list",
             ["points"] = {
               {
-                ["args"] = {
-                  ["query"] = {
-                    {
-                      ["example"] = 3,
-                      ["kind"] = "query",
-                      ["name"] = "limit",
-                      ["orig"] = "limit",
-                      ["type"] = "`$INTEGER`",
-                    },
-                    {
-                      ["example"] = "diabetes",
-                      ["kind"] = "query",
-                      ["name"] = "q",
-                      ["orig"] = "q",
-                      ["type"] = "`$STRING`",
-                    },
-                  },
-                },
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/buscar/cie-10",
@@ -146,19 +132,38 @@ local function make_config()
                     ["lit"] = "cie-10",
                   },
                 },
+                ["parts"] = {
+                  "buscar",
+                  "cie-10",
+                },
+                ["rename"] = {},
+                ["transform"] = {
+                  ["req"] = "`reqdata`",
+                  ["res"] = "`body.results`",
+                },
+                ["args"] = {
+                  ["query"] = {
+                    {
+                      ["name"] = "limit",
+                      ["orig"] = "limit",
+                      ["type"] = "`$INTEGER`",
+                      ["kind"] = "query",
+                      ["example"] = 3,
+                    },
+                    {
+                      ["name"] = "q",
+                      ["orig"] = "q",
+                      ["type"] = "`$STRING`",
+                      ["kind"] = "query",
+                      ["example"] = "diabetes",
+                    },
+                  },
+                },
                 ["select"] = {
                   ["exist"] = {
                     "limit",
                     "q",
                   },
-                },
-                ["transform"] = {
-                  ["req"] = "`reqdata`",
-                  ["res"] = "`body.results`",
-                },
-                ["parts"] = {
-                  "buscar",
-                  "cie-10",
                 },
               },
             },

@@ -1,0 +1,96 @@
+# Entity: cie_10
+
+main: kit: entity: cie_10: {
+
+  alias: field: {}
+
+  fields: {
+    codigo: {
+      h: "Codigo"
+      n: "codigo"
+      r: true
+      sh: "CIE-10 code or code range."
+      t: "`$STRING`"
+    }
+    nivel: {
+      h: "Nivel"
+      n: "nivel"
+      r: true
+      sh: "Hierarchy level returned by NotaSalud."
+      t: "`$INTEGER`"
+    }
+    nombre: {
+      h: "Nombre"
+      n: "nombre"
+      r: true
+      sh: "Spanish display name."
+      t: "`$STRING`"
+    }
+    url: {
+      h: "Url"
+      n: "url"
+      r: true
+      sh: "Relative NotaSalud reference page URL for this code or range."
+      t: "`$STRING`"
+    }
+  }
+
+  name: "cie_10"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /buscar/cie-10"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: 3
+                k: "query"
+                n: "limit"
+                or: "limit"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: "diabetes"
+                k: "query"
+                n: "q"
+                or: "q"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/buscar/cie-10"
+          q: {
+            exist: [
+              "limit"
+              "q"
+            ]
+          }
+          s: [
+            {
+              lit: "buscar"
+            }
+            {
+              lit: "cie-10"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.results`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

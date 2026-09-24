@@ -91,27 +91,31 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "codigo",
+						"title": "Codigo",
+						"type": "`$STRING`",
 						"req": true,
 						"short": "CIE-10 code or code range.",
-						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "nivel",
+						"title": "Nivel",
+						"type": "`$INTEGER`",
 						"req": true,
 						"short": "Hierarchy level returned by NotaSalud.",
-						"type": "`$INTEGER`",
 					},
 					map[string]any{
 						"name": "nombre",
+						"title": "Nombre",
+						"type": "`$STRING`",
 						"req": true,
 						"short": "Spanish display name.",
-						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "url",
+						"title": "Url",
+						"type": "`$STRING`",
 						"req": true,
 						"short": "Relative NotaSalud reference page URL for this code or range.",
-						"type": "`$STRING`",
 					},
 				},
 				"name": "cie_10",
@@ -121,24 +125,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"query": []any{
-										map[string]any{
-											"example": 3,
-											"kind": "query",
-											"name": "limit",
-											"orig": "limit",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"example": "diabetes",
-											"kind": "query",
-											"name": "q",
-											"orig": "q",
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/buscar/cie-10",
@@ -150,19 +136,38 @@ func MakeConfig() map[string]any {
 										"lit": "cie-10",
 									},
 								},
+								"parts": []any{
+									"buscar",
+									"cie-10",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body.results`",
+								},
+								"args": map[string]any{
+									"query": []any{
+										map[string]any{
+											"name": "limit",
+											"orig": "limit",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 3,
+										},
+										map[string]any{
+											"name": "q",
+											"orig": "q",
+											"type": "`$STRING`",
+											"kind": "query",
+											"example": "diabetes",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"limit",
 										"q",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body.results`",
-								},
-								"parts": []any{
-									"buscar",
-									"cie-10",
 								},
 							},
 						},

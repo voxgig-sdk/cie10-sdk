@@ -43,7 +43,7 @@ local cie10s, err = client:Cie10():list()
 if err then error(err) end
 
 for _, item in ipairs(cie10s) do
-  print(item["codigo"])
+  print(item)
 end
 ```
 

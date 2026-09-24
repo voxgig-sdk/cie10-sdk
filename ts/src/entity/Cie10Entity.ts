@@ -19,7 +19,6 @@ import type {
   Cie10ListMatch,
 } from '../Cie10Types'
 
-// TODO: needs Entity superclass
 class Cie10Entity extends Cie10EntityBase<Cie10> {
 
   constructor(client: Cie10SDK, entopts: any) {

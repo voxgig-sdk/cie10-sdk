@@ -16,12 +16,6 @@ const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
 }
 
 
-// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
-// the model's active plugin groups. A feature that takes a `plugins` option
-// (secrets over sekreto) reads its own entry; a feature with no plugins has
-// none. Named imports above make each definition statically reachable, so
-// an SDK carries exactly the plugin modules its model selects — the same
-// leanness the old side-effect registry imports bought, without a registry.
 const FEATURE_PLUGINS: Record<string, any[]> = {
   
 }
@@ -32,7 +26,6 @@ class Config {
   makeFeature(this: any, fn: string) {
     const fc = FEATURE_CLASS[fn]
     const fi = new fc()
-    // TODO: errors etc
     return fi
   }
 
@@ -139,27 +132,31 @@ class Config {
       "fields": [
         {
           "name": "codigo",
+          "title": "Codigo",
+          "type": "`$STRING`",
           "req": true,
-          "short": "CIE-10 code or code range.",
-          "type": "`$STRING`"
+          "short": "CIE-10 code or code range."
         },
         {
           "name": "nivel",
+          "title": "Nivel",
+          "type": "`$INTEGER`",
           "req": true,
-          "short": "Hierarchy level returned by NotaSalud.",
-          "type": "`$INTEGER`"
+          "short": "Hierarchy level returned by NotaSalud."
         },
         {
           "name": "nombre",
+          "title": "Nombre",
+          "type": "`$STRING`",
           "req": true,
-          "short": "Spanish display name.",
-          "type": "`$STRING`"
+          "short": "Spanish display name."
         },
         {
           "name": "url",
+          "title": "Url",
+          "type": "`$STRING`",
           "req": true,
-          "short": "Relative NotaSalud reference page URL for this code or range.",
-          "type": "`$STRING`"
+          "short": "Relative NotaSalud reference page URL for this code or range."
         }
       ],
       "name": "cie_10",
@@ -169,24 +166,6 @@ class Config {
           "name": "list",
           "points": [
             {
-              "args": {
-                "query": [
-                  {
-                    "example": 3,
-                    "kind": "query",
-                    "name": "limit",
-                    "orig": "limit",
-                    "type": "`$INTEGER`"
-                  },
-                  {
-                    "example": "diabetes",
-                    "kind": "query",
-                    "name": "q",
-                    "orig": "q",
-                    "type": "`$STRING`"
-                  }
-                ]
-              },
               "kind": "http",
               "method": "GET",
               "orig": "/buscar/cie-10",
@@ -198,20 +177,39 @@ class Config {
                   "lit": "cie-10"
                 }
               ],
+              "parts": [
+                "buscar",
+                "cie-10"
+              ],
+              "rename": {},
+              "transform": {
+                "req": "`reqdata`",
+                "res": "`body.results`"
+              },
+              "args": {
+                "query": [
+                  {
+                    "name": "limit",
+                    "orig": "limit",
+                    "type": "`$INTEGER`",
+                    "kind": "query",
+                    "example": 3
+                  },
+                  {
+                    "name": "q",
+                    "orig": "q",
+                    "type": "`$STRING`",
+                    "kind": "query",
+                    "example": "diabetes"
+                  }
+                ]
+              },
               "select": {
                 "exist": [
                   "limit",
                   "q"
                 ]
-              },
-              "transform": {
-                "req": "`reqdata`",
-                "res": "`body.results`"
-              },
-              "parts": [
-                "buscar",
-                "cie-10"
-              ]
+              }
             }
           ]
         }

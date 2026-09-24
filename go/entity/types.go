@@ -1,7 +1,7 @@
 // Typed models for the Cie10 SDK.
 //
-// GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
-// params (op.<name>.points[].args.params[]). Field/param types come from the
+// GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+// params (op.<name>.points[].g.params[]). Field/param types come from the
 // canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 package entity
@@ -14,10 +14,6 @@ import (
 
 // Cie10 is the typed data model for the cie_10 entity.
 type Cie10 struct {
-	Codigo string `json:"codigo"`
-	Nivel int `json:"nivel"`
-	Nombre string `json:"nombre"`
-	Url string `json:"url"`
 }
 
 // Cie10ListMatch is the typed request payload for Cie10.ListTyped.
