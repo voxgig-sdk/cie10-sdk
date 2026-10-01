@@ -37,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 Cie10Utility::setRegistrar(function (Cie10Utility $u): void {
     $u->clean = [Cie10Clean::class, 'call'];
+    $u->clean_add = [Cie10Clean::class, 'add'];
+    $u->clean_explain = [Cie10Done::class, 'clean_explain'];
     $u->done = [Cie10Done::class, 'call'];
     $u->make_error = [Cie10MakeError::class, 'call'];
     $u->feature_add = [Cie10FeatureAdd::class, 'call'];

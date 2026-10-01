@@ -33,6 +33,8 @@ require_relative 'transform_response'
 
 Cie10Utility.registrar = ->(u) {
   u.clean = Cie10Utilities::Clean
+  u.clean_add = Cie10Utilities::CleanAdd
+  u.clean_explain = Cie10Utilities::CleanExplain
   u.done = Cie10Utilities::Done
   u.make_error = Cie10Utilities::MakeError
   u.feature_add = Cie10Utilities::FeatureAdd
