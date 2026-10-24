@@ -9,7 +9,7 @@ import { createLiveTransport } from '../../live-runner'
 import { runLiveEntity } from '../../live-entity'
 
 
-import { Cie10SDK, BaseFeature, stdutil } from '../../..'
+import { Cie10SDK, BaseFeature, config, stdutil } from '../../..'
 
 import {
   envOverride,
@@ -41,6 +41,64 @@ describe('Cie10Entity', async () => {
   })
 
 
+  class FailHook extends BaseFeature {
+    name = 'failhook'
+    version = '0.0.1'
+    active = true
+    unexpected = 0
+    init() { }
+    PreSpec() { throw new Error('cie_10 hook failed') }
+    PreUnexpected() { this.unexpected++ }
+  }
+
+  test('stream-error', async () => {
+    const offline = { net: { offline: true } }
+    await assert.rejects(async () => {
+      for await (const _item of Cie10SDK.test(offline).Cie10().stream('list')) { }
+    }, /offline/)
+
+    for await (const _item of Cie10SDK.test(offline).Cie10()
+      .stream('list', undefined, { ctrl: { throw: false } })) { }
+
+    if (null != (config as any).feature?.rbac) {
+      const denied = Cie10SDK.test(undefined, { feature: { rbac: { active: true, deny: true } } })
+      await assert.rejects(async () => {
+        for await (const _item of denied.Cie10().stream('list')) { }
+      }, (err: any) => 'rbac_denied' === err.code)
+    }
+  })
+
+  test('stream-ctrl', async () => {
+    const explain: any = {}
+    const ctrl: any = { explain }
+    for await (const _item of Cie10SDK.test().Cie10().stream('list', undefined, { ctrl })) { }
+    assert.deepStrictEqual(Object.keys(ctrl), ['explain'])
+    assert(explain === ctrl.explain && 0 < Object.keys(explain).length)
+  })
+
+  test('unexpected', async () => {
+    const hook = new FailHook()
+    const client = new Cie10SDK({ feature: { test: { active: true } }, extend: [hook] })
+    await assert.rejects(client.Cie10().list(), /hook failed/)
+    assert(0 < hook.unexpected)
+
+    const fired = hook.unexpected
+    assert.strictEqual(await client.Cie10().list(undefined, { throw: false }), undefined)
+    assert(fired < hook.unexpected)
+  })
+
+  test('validate', async (t) => {
+    if (null == (config as any).feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = Cie10SDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.Cie10().list({"limit":"x"} as any),
+      (err: any) => 'validate_failed' === err.code)
+  })
+
+
+
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.CIE10_TEST_LIVE
@@ -51,7 +109,7 @@ describe('Cie10Entity', async () => {
     
     const setup = basicSetup()
     if (setup.live) {
-      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"codigo":{"a":true,"h":"Codigo","n":"codigo","r":true,"sh":"CIE-10 code or code range.","t":"`$STRING`","key$":"codigo","index$":0},"nivel":{"a":true,"h":"Nivel","n":"nivel","r":true,"sh":"Hierarchy level returned by NotaSalud.","t":"`$INTEGER`","key$":"nivel","index$":1},"nombre":{"a":true,"h":"Nombre","n":"nombre","r":true,"sh":"Spanish display name.","t":"`$STRING`","key$":"nombre","index$":2},"url":{"a":true,"h":"Url","n":"url","r":true,"sh":"Relative NotaSalud reference page URL for this code or range.","t":"`$STRING`","key$":"url","index$":3}},"name":"cie_10","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /buscar/cie-10","source":"openapi3","version":2},"g":{"query":[{"a":true,"ex":3,"k":"query","n":"limit","or":"limit","r":false,"t":"`$INTEGER`","index$":0},{"a":true,"ex":"diabetes","k":"query","n":"q","or":"q","r":false,"t":"`$STRING`","index$":1}]},"k":"http","m":"GET","o":"/buscar/cie-10","q":{"exist":["limit","q"]},"r":{},"s":[{"lit":"buscar"},{"lit":"cie-10"}],"t":{"req":"`reqdata`","res":"`body.results`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"cie_10","name__orig":"cie_10","Name":"Cie10","name_":"cie_10","name-":"cie-10","NAME":"CIE_10","index$":0}, {"active":true,"entity":"cie_10","key$":"BasicCie10Flow","kind":"basic","name":"BasicCie10Flow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"cie_10_ref01"}}],"index$":0}]}, 'Cie10', {"GET /buscar/cie-10":{"protocol":"http","parameters":[{"name":"q","in":"query","required":false,"description":"Search term or CIE-10 code, for example `diabetes`, `colera`, or `A00`.","schema":{"type":"string","minLength":1},"examples":{"diagnosis":{"summary":"Diagnosis search","value":"diabetes"},"code":{"summary":"Code search","value":"A00"}},"index$":0},{"name":"limit","in":"query","required":false,"description":"Maximum number of results to return.","schema":{"type":"integer","minimum":1,"maximum":100,"default":25},"example":3,"index$":1}]}})
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"codigo":{"a":true,"h":"Codigo","n":"codigo","r":true,"sh":"CIE-10 code or code range.","t":"`$STRING`","key$":"codigo","index$":0},"nivel":{"a":true,"h":"Nivel","n":"nivel","r":true,"sh":"Hierarchy level returned by NotaSalud.","t":"`$INTEGER`","key$":"nivel","index$":1},"nombre":{"a":true,"h":"Nombre","n":"nombre","r":true,"sh":"Spanish display name.","t":"`$STRING`","key$":"nombre","index$":2},"url":{"a":true,"h":"Url","n":"url","r":true,"sh":"Relative NotaSalud reference page URL for this code or range.","t":"`$STRING`","key$":"url","index$":3}},"name":"cie_10","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /buscar/cie-10","source":"openapi3","version":2},"g":{"query":[{"a":true,"ex":3,"k":"query","n":"limit","or":"limit","r":false,"t":"`$INTEGER`","index$":0},{"a":true,"ex":"diabetes","k":"query","n":"q","or":"q","r":false,"t":"`$STRING`","index$":1}]},"k":"http","m":"GET","o":"/buscar/cie-10","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"buscar"},{"lit":"cie-10"}],"t":{"req":"`reqdata`","res":"`body.results`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"cie_10","name__orig":"cie_10","Name":"Cie10","name_":"cie_10","name-":"cie-10","NAME":"CIE_10","index$":0}, {"active":true,"entity":"cie_10","key$":"BasicCie10Flow","kind":"basic","name":"BasicCie10Flow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"cie_10_ref01"}}],"index$":0}]}, 'Cie10', {"GET /buscar/cie-10":{"protocol":"http","parameters":[{"name":"q","in":"query","required":false,"description":"Search term or CIE-10 code, for example `diabetes`, `colera`, or `A00`.","schema":{"type":"string","minLength":1},"examples":{"diagnosis":{"summary":"Diagnosis search","value":"diabetes"},"code":{"summary":"Code search","value":"A00"}},"index$":0},{"name":"limit","in":"query","required":false,"description":"Maximum number of results to return.","schema":{"type":"integer","minimum":1,"maximum":100,"default":25},"example":3,"index$":1}]}}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -72,6 +130,12 @@ describe('Cie10Entity', async () => {
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra?: any) {
   // TODO: fix test def options

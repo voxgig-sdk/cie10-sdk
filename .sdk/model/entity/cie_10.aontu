@@ -68,11 +68,9 @@ main: kit: entity: cie_10: {
           }
           m: "GET"
           o: "/buscar/cie-10"
-          q: {
-            exist: [
-              "limit"
-              "q"
-            ]
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
           s: [
             {

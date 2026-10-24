@@ -17,12 +17,26 @@ const PLAN = [
         "args": [],
         "select": {
             "limit": 3,
-            "q": "v1"
+            "q": "diabetes"
         },
         "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
         "query": [
             "q",
             "limit"
+        ],
+        "queryArgs": [
+            {
+                "name": "limit",
+                "wire": "limit"
+            },
+            {
+                "name": "q",
+                "wire": "q"
+            }
         ],
         "auth": null,
         "status": 200,

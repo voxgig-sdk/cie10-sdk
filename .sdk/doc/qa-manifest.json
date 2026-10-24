@@ -3,5 +3,16 @@
     "SUMMARY.md"
   ],
   "config": ".sdk/doc/qa/vale.ini",
-  "routes": {}
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "CIE-10 code or code range.",
+      "Hierarchy level returned by NotaSalud.",
+      "NotaSalud production site",
+      "Public JSON endpoint for searching Spanish CIE-10/ICD-10 reference entries on NotaSalud. This API is for code/reference lookup and does not provide diagnosis, treatment advice, or clinical decision support.",
+      "Relative NotaSalud reference page URL for this code or range.",
+      "Search results",
+      "Spanish display name."
+    ]
+  }
 }
